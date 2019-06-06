@@ -1,0 +1,127 @@
+<div class="container">
+  <div class="card shopping-cart">
+    <div class="card-header bg-dark text-light">
+      <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+      Shipping cart
+      <a routerLink="" class="btn btn-outline-info btn-sm">Continue shopping</a>
+      <div class="clearfix"></div>
+    </div>
+    <div class="card-body">
+      <div class="row justify-content-center"  *ngIf="cartProductList.length === 0">
+        <h4>Your shopping cart is empty!</h4>
+      </div>
+      <!-- PRODUCT -->
+      <div class="row" *ngFor="let cardProd of cartProductList; let i = index">
+        <div class="col-12 col-sm-12 col-md-2 text-center">
+          <img class="img-responsive" [src]="cardProd.product.imagePath" alt="{{cardProd.product.name}}"  height="80">
+        </div>
+        <div class="col-12 text-sm-center col-sm-12 text-md-left col-md-6">
+          <h4 class="product-name"><strong>{{cardProd.product.name}}</strong></h4>
+          <h4>
+            <small>Brand {{cardProd.product.brand}}</small>
+          </h4>
+        </div>
+        <div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right row">
+          <div class="col-3 col-sm-3 col-md-6 text-md-right" style="padding-top: 5px">
+            <h6><strong>{{cardProd.product.price | number : '1.2-2'}} <span class="text-muted">x</span></strong></h6>
+          </div>
+          <div class="col-4 col-sm-4 col-md-4">
+            <div class="quantity">
+              <input type="button" value="+" class="plus" (click)="changeAmount(1, i)">
+              <fieldset disabled>
+                <input type="number" step="1" max="99" min="0" value="{{cardProd.amount}}" title="Qty" class="qty"
+                       size="4">
+              </fieldset>
+              <input type="button" value="-" class="minus" (click)="changeAmount(-1, i)">
+            </div>
+          </div>
+          <div class="col-2 col-sm-2 col-md-2 text-right">
+            <button type="button" class="btn btn-outline-danger btn-xs" (click)="deleteCartProduct(i)">
+              <i class="fa fa-trash" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- END PRODUCT -->
+    </div>
+    <div class="card-footer">
+      <div class="row justify-content-end" style="margin: 10px">
+        <div class="col-3" style="margin: 5px">
+          Total price: <b>{{totalPrice() | number : '1.2-2'}} DKK</b>
+        </div>
+        <div class="col-3">
+          <a href="#" class="btn btn-success pull-right">Checkout</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div>
+  <button (click)="show()">Show</button>
+</div>
+
+
+<!--<div class="row">-->
+<!--  <div class="col-12 col-sm-12 col-md-2 text-center">-->
+<!--    <img class="img-responsive" src="http://placehold.it/120x80" alt="prewiew" width="120" height="80">-->
+<!--  </div>-->
+<!--  <div class="col-12 text-sm-center col-sm-12 text-md-left col-md-6">-->
+<!--    <h4 class="product-name"><strong>Product Name</strong></h4>-->
+<!--    <h4>-->
+<!--      <small>Product description</small>-->
+<!--    </h4>-->
+<!--  </div>-->
+<!--  <div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right row">-->
+<!--    <div class="col-3 col-sm-3 col-md-6 text-md-right" style="padding-top: 5px">-->
+<!--      <h6><strong>25.00 <span class="text-muted">x</span></strong></h6>-->
+<!--    </div>-->
+<!--    <div class="col-4 col-sm-4 col-md-4">-->
+<!--      <div class="quantity">-->
+<!--        <input type="button" value="+" class="plus">-->
+<!--        <input type="number" step="1" max="99" min="1" value="1" title="Qty" class="qty"-->
+<!--               size="4">-->
+<!--        <input type="button" value="-" class="minus">-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="col-2 col-sm-2 col-md-2 text-right">-->
+<!--      <button type="button" class="btn btn-outline-danger btn-xs">-->
+<!--        <i class="fa fa-trash" aria-hidden="true"></i>-->
+<!--      </button>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<!--<hr>-->
+<!--&lt;!&ndash; END PRODUCT &ndash;&gt;-->
+<!--&lt;!&ndash; PRODUCT &ndash;&gt;-->
+<!--<div class="row">-->
+<!--  <div class="col-12 col-sm-12 col-md-2 text-center">-->
+<!--    <img class="img-responsive" src="http://placehold.it/120x80" alt="prewiew" width="120" height="80">-->
+<!--  </div>-->
+<!--  <div class="col-12 text-sm-center col-sm-12 text-md-left col-md-6">-->
+<!--    <h4 class="product-name"><strong>Product Name</strong></h4>-->
+<!--    <h4>-->
+<!--      <small>Product description</small>-->
+<!--    </h4>-->
+<!--  </div>-->
+<!--  <div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right row">-->
+<!--    <div class="col-3 col-sm-3 col-md-6 text-md-right" style="padding-top: 5px">-->
+<!--      <h6><strong>25.00 <span class="text-muted">x</span></strong></h6>-->
+<!--    </div>-->
+<!--    <div class="col-4 col-sm-4 col-md-4">-->
+<!--      <div class="quantity">-->
+<!--        <input type="button" value="+" class="plus">-->
+<!--        <input type="number" step="1" max="99" min="1" value="1" title="Qty" class="qty"-->
+<!--               size="4">-->
+<!--        <input type="button" value="-" class="minus">-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="col-2 col-sm-2 col-md-2 text-right">-->
+<!--      <button type="button" class="btn btn-outline-danger btn-xs">-->
+<!--        <i class="fa fa-trash" aria-hidden="true"></i>-->
+<!--      </button>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<!--<hr>-->

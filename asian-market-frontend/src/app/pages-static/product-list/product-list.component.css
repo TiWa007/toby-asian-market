@@ -1,0 +1,8 @@
+#brandbox {
+  /*border:2px solid #ccc;*/
+  border:thin lightgray solid;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  height: 8rem;
+  overflow-y: scroll
+}
