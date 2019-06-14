@@ -99,14 +99,14 @@
         <div class="col-md-3 col-sm-6 mt-4" *ngFor="let product of productList" >
           <div class="card align-content-center align-items-center" style="height: 20rem; width: 14rem">
             <div class="text-center" style="height: 12rem; width:12rem; padding-top: 0.5rem">
-              <a href="#">
+              <a routerLink="/productDetail/{{product.productId}}">
                 <img class="img-fluid h-100" [src]="product.imagePath"  alt="{{product.name}}">
               </a>
             </div>
 
             <div class="card-body">
               <div style="height: 3rem">
-                <a href="#">
+                <a routerLink="/productDetail/{{product.productId}}">
                   <p class="text-center">{{product.name}}</p>
                 </a>
               </div>

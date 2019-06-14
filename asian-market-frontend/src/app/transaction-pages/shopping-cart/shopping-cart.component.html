@@ -13,10 +13,14 @@
       <!-- PRODUCT -->
       <div class="row" *ngFor="let cardProd of cartProductList; let i = index">
         <div class="col-12 col-sm-12 col-md-2 text-center">
-          <img class="img-responsive" [src]="cardProd.product.imagePath" alt="{{cardProd.product.name}}"  height="80">
+          <a routerLink="/productDetail/{{cardProd.product.productId}}">
+            <img class="img-responsive" [src]="cardProd.product.imagePath" alt="{{cardProd.product.name}}"  height="80">
+          </a>
         </div>
         <div class="col-12 text-sm-center col-sm-12 text-md-left col-md-6">
-          <h4 class="product-name"><strong>{{cardProd.product.name}}</strong></h4>
+          <a routerLink="/productDetail/{{cardProd.product.productId}}">
+            <h4 class="product-name"><strong>{{cardProd.product.name}}</strong></h4>
+          </a>
           <h4>
             <small>Brand {{cardProd.product.brand}}</small>
           </h4>

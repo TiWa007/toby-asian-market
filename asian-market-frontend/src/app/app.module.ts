@@ -12,9 +12,10 @@ import { ProductListComponent } from './pages-static/product-list/product-list.c
 import {HttpClientModule} from '@angular/common/http';
 import { ErrorComponent } from './error/error.component';
 import { ContactComponent } from './pages-static/contact/contact.component';
-import { ShoppingCartComponent } from './transaction-page/shopping-cart/shopping-cart.component';
+import { ShoppingCartComponent } from './transaction-pages/shopping-cart/shopping-cart.component';
 import { LoginComponent } from './user-pages/login/login.component';
 import { SignUpComponent } from './user-pages/sign-up/sign-up.component';
+import { ProductDetailComponent } from './pages-static/product-detail/product-detail.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { SignUpComponent } from './user-pages/sign-up/sign-up.component';
     ContactComponent,
     ShoppingCartComponent,
     LoginComponent,
-    SignUpComponent
+    SignUpComponent,
+    ProductDetailComponent
   ],
   imports: [
     BrowserModule,

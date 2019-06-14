@@ -14,6 +14,9 @@ import java.util.List;
 @Repository
 public interface ProductListDAO extends JpaRepository<Product, Long> {
 
+    // get product detail from database by id
+    Product findByProductId(Long id);
+
     // Find by category
 //    Page<Product> findAllBy(Pageable pageProduct);
 //    Page<Product> findByIsSale(Integer isSale, Pageable pageProduct);

@@ -1,0 +1,37 @@
+<div class="container" *ngIf="product">
+  <div class="row align-items-center justify-content-center">
+    <div class="col-xs-4">
+      <img style="max-width:80%;" [src]="product.imagePath"  alt="{{product.name}}">
+    </div>
+    <div class="col-xs-5" style="border:0px solid gray">
+      <div class="container">
+        <h3>{{product.name}}</h3>
+        <h3>{{product.price | number : '1.2-2'}} DKK</h3>
+        <div class="quantity">
+          <input type="button" value="+" class="plus" (click)="changeAmount(1)">
+          <fieldset disabled>
+            <input type="number" step="1" max="99" min="0" [value]="amount" title="Qty" class="qty"
+                   size="4">
+          </fieldset>
+          <input type="button" value="-" class="minus" (click)="changeAmount(-1)">
+        </div>
+        <a (click)="addToCart()"><i class="fa fa-shopping-cart" placement="top" ngbTooltip="Add to Cart"></i></a>
+      </div>
+      <br>
+      <div class="container">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">Description</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="brand-tab" data-toggle="tab" href="#brand" role="tab" aria-controls="brand" aria-selected="false">Brand</a>
+          </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="description-tab">{{product.description}}</div>
+          <div class="tab-pane fade" id="brand" role="tabpanel" aria-labelledby="brand-tab">{{product.brand}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -30,6 +30,16 @@ public class ProductListController {
     private final int pageSize = 8;
     private Page<Product> productList;
 
+    // get product detail from database by id
+    @GetMapping(path = "/products/detail/{id}")
+    public ResponseEntity<Product> getProductDetail(
+            @PathVariable Long id
+    ) throws IOException {
+        Product product = productListDAO.findByProductId(id);
+        updateProductWithImageURI(product);
+        return new ResponseEntity<Product>(product, HttpStatus.ACCEPTED);
+    }
+
     // get products from database according to category where imagePath is encodeBase64
     @GetMapping(path = "/products/{category}")
     public ResponseEntity<Page<Product>> getProductByCategory(
@@ -40,7 +50,7 @@ public class ProductListController {
         HttpHeaders responseHeaders = new HttpHeaders();
         Pageable pageProduct = PageRequest.of(pageNo, pageSize);
         Page<Product> productList = productListDAO.findProductList(category, searchKey, pageProduct);
-        updateProductListWithImageURI1(productList);
+        updateProductListWithImageURI(productList);
         return new ResponseEntity<Page<Product>>(productList, responseHeaders, HttpStatus.ACCEPTED);
     }
 
@@ -126,11 +136,11 @@ public class ProductListController {
             productList= productListDAO.findProductByFind1(productCategory, isSale, brand, searchKey, minPrice, maxPrice, pageProduct);
         }
 
-        updateProductListWithImageURI1(productList);
+        updateProductListWithImageURI(productList);
         return new ResponseEntity<Page<Product>>(productList, responseHeaders, HttpStatus.ACCEPTED);
     }
 
-    private void updateProductListWithImageURI1(Page<Product> productList) throws IOException {
+    private void updateProductListWithImageURI(Page<Product> productList) throws IOException {
         File imageFolder = new File("./src/main/resources/static/images/productImage");
         HashMap<String, String> imageMap = new HashMap<>();
         for (File file : imageFolder.listFiles()) {
@@ -143,6 +153,20 @@ public class ProductListController {
         for(Product product: productList) {
             product.setImagePath(imageMap.get(product.getImagePath()));
         }
+    }
+
+    private void updateProductWithImageURI(Product product) throws IOException {
+        File imageFolder = new File("./src/main/resources/static/images/productImage");
+        HashMap<String, String> imageMap = new HashMap<>();
+        for (File file : imageFolder.listFiles()) {
+            InputStream in = new FileInputStream(file);
+            byte[] bytes = IOUtils.toByteArray(in);
+            String encodeBase64 = Base64.getEncoder().encodeToString(bytes);
+            encodeBase64 = "data:image/jpeg;base64," + encodeBase64;
+            imageMap.put(file.getName(), encodeBase64);
+        }
+        product.setImagePath(imageMap.get(product.getImagePath()));
+
     }
 
     public void set() throws IOException {

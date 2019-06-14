@@ -30,5 +30,8 @@ export class ProductListService {
     return this.http.get<string[]>(`${commonURI.backendURI}/products/${category}/brandlist`, {params});
   }
 
+  getProductDetailById(id) {
+    return this.http.get<Product>(`${commonURI.backendURI}/products/detail/${id}`);
+  }
 
 }
