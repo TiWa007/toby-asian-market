@@ -7,33 +7,33 @@
       <div class="clearfix"></div>
     </div>
     <div class="card-body">
-      <div class="row justify-content-center"  *ngIf="cartProductList.length === 0">
+      <div class="row justify-content-center"  *ngIf="cartProductItemList.length === 0">
         <h4>Your shopping cart is empty!</h4>
       </div>
       <!-- PRODUCT -->
-      <div class="row" *ngFor="let cardProd of cartProductList; let i = index">
+      <div class="row" *ngFor="let cardProd of cartProductItemList; let i = index">
         <div class="col-12 col-sm-12 col-md-2 text-center">
-          <a routerLink="/productDetail/{{cardProd.product.productId}}">
-            <img class="img-responsive" [src]="cardProd.product.imagePath" alt="{{cardProd.product.name}}"  height="80">
+          <a routerLink="/product/{{cardProd.cartProduct.product.productId}}">
+            <img class="img-responsive" [src]="cardProd.imageURL" alt="{{cardProd.cartProduct.product.name}}"  height="80">
           </a>
         </div>
         <div class="col-12 text-sm-center col-sm-12 text-md-left col-md-6">
-          <a routerLink="/productDetail/{{cardProd.product.productId}}">
-            <h4 class="product-name"><strong>{{cardProd.product.name}}</strong></h4>
+          <a routerLink="/product/{{cardProd.cartProduct.product.productId}}">
+            <h4 class="product-name"><strong>{{cardProd.cartProduct.product.name}}</strong></h4>
           </a>
           <h4>
-            <small>Brand {{cardProd.product.brand}}</small>
+            <small>Brand {{cardProd.cartProduct.product.brand}}</small>
           </h4>
         </div>
         <div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right row">
           <div class="col-3 col-sm-3 col-md-6 text-md-right" style="padding-top: 5px">
-            <h6><strong>{{cardProd.product.price | number : '1.2-2'}} <span class="text-muted">x</span></strong></h6>
+            <h6><strong>{{cardProd.cartProduct.product.price | number : '1.2-2'}} DKK</strong></h6>
           </div>
           <div class="col-4 col-sm-4 col-md-4">
             <div class="quantity">
               <input type="button" value="+" class="plus" (click)="changeAmount(1, i)">
               <fieldset disabled>
-                <input type="number" step="1" max="99" min="0" value="{{cardProd.amount}}" title="Qty" class="qty"
+                <input type="number" step="1" max="99" min="0" value="{{cardProd.cartProduct.quantity}}" title="Qty" class="qty"
                        size="4">
               </fieldset>
               <input type="button" value="-" class="minus" (click)="changeAmount(-1, i)">
@@ -54,16 +54,11 @@
           Total price: <b>{{totalPrice() | number : '1.2-2'}} DKK</b>
         </div>
         <div class="col-3">
-          <a href="#" class="btn btn-success pull-right">Checkout</a>
+          <a routerLink="/user/checkout" class="btn btn-success pull-right">Checkout</a>
         </div>
-
       </div>
     </div>
   </div>
-</div>
-
-<div>
-  <button (click)="show()">Show</button>
 </div>
 
 

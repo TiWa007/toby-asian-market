@@ -1,0 +1,95 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 class="modal-title">Order Details</h3>
+      <button type="button" class="close" (click)="activeModal.dismiss('Cross click')" aria-hidden="true">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form #orderForm="ngForm" class="form-horizontal" role="form">
+        <p>Order Number: {{order.orderId}}</p>
+        <h5>Order Status</h5>
+        <p>Total items: {{getItemNumber()}}</p>
+        <p>Total cost: {{order.amount | number : '1.2-2'}} DKK</p>
+        <p>Create Date: {{order.createDate | date:'medium'}}</p>
+        <p *ngIf="order.updateDate">Last Update Date: {{order.updateDate | date:'medium'}}</p>
+        <div class="form-group">
+          <label for="payment" class="col-sm-9 control-label">Payment Status</label>
+          <div class="col-sm-9">
+            <select name="payment" id="payment" class="form-control" required [disabled]="!isEdit"
+                    [ngModel]="getPayStatus()" (ngModelChange)="changeStatus()" #payment="ngModel" >
+              <option *ngFor="let pay of payStatus" [value]="pay" [selected]="pay === getPayStatus()">{{ pay }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="delivery" class="col-sm-9 control-label">Delivery Status</label>
+          <div class="col-sm-9">
+            <select name="delivery" id="delivery" class="form-control" required [disabled]="!isEdit"
+                    [ngModel]="getDeliveryStatus()" (ngModelChange)="changeStatus()" #delivery="ngModel">
+              <option *ngFor="let de of deliveryStatus" [value]="de" [selected]="de === getDeliveryStatus()">{{ de }}</option>
+            </select>
+          </div>
+        </div>
+        <p *ngIf="order.deliveryDate">Delivery Date: {{order.deliveryDate | date:'medium'}}</p>
+
+        <h5>User Information</h5>
+        <p>User Name: {{order.user.fullName}}</p>
+        <p>User Note: {{order.userNote}}</p>
+
+        <h5>Address Details</h5>
+        <p>{{order.address.fullName}}</p>
+        <p>{{order.address.addressLine1}}</p>
+        <div *ngIf="order.address.addressLine2">
+          <p>{{order.address.addressLine2}}</p>
+        </div>
+        <p>{{order.address.city}} {{order.address.postcode}}</p>
+        <p>{{order.address.country}}</p>
+        <p>{{order.address.phoneNumber}}</p>
+
+        <h5>Order Items</h5>
+        <div class="table-responsive">
+          <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+              <th scope="col">No.</th>
+              <th scope="col">Product No.</th>
+              <th scope="col" class="text-left">Name</th>
+              <th scope="col" class="text-left">Price (DKK)</th>
+              <th scope="col" class="text-left">Quantity</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let orderIt of order.orderItemSet; let idx = index">
+              <td>{{idx + 1}}</td>
+              <td>{{orderIt.product.productId}}</td>
+              <td>{{orderIt.product.name}}</td>
+              <td>{{orderIt.product.price | number : '1.2-2'}}</td>
+              <td>
+                <input class="form-control" type="number" name=quantity{{idx}} required [disabled]="!isEdit"
+                       [ngModel]="order.orderItemSet[idx].quantity" (ngModelChange)="changeQuantity($event, idx)" />
+              </td>
+            </tr>
+            </tbody>
+          </table>
+
+          <div class="form-group">
+            <label for="note">Note</label>
+            <textarea name="note" class="form-control rounded-0" id="note" rows="3" [disabled]="!isEdit"
+                      [ngModel]="order.note" (ngModelChange)="changeStatus()"></textarea>
+          </div>
+
+        </div>
+        <div *ngIf="isEdit">
+          <button type="submit" class="btn btn-secondary mr-3" [disabled]="!isChanged" (click)="update(orderForm)">Save</button>
+          <button class="btn btn-warning mx-3" (click)="activeModal.dismiss('Cancel');cancel()">Cancel</button>
+        </div>
+        <div *ngIf="!isEdit">
+          <button class="btn btn-secondary mr-3" (click)="edit()">Edit</button>
+          <button class="btn btn-warning mx-3" (click)="activeModal.dismiss('Close')">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

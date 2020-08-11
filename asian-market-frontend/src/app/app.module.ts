@@ -1,43 +1,39 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './pages-static/navbar/navbar.component';
-import { FooterComponent } from './pages-static/footer/footer.component';
-import {FormsModule} from '@angular/forms';
-import { ProductListComponent } from './pages-static/product-list/product-list.component';
-import {HttpClientModule} from '@angular/common/http';
+import { NavbarComponent } from './static-pages/navbar/navbar.component';
+import { FooterComponent } from './static-pages/footer/footer.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { ErrorComponent } from './error/error.component';
-import { ContactComponent } from './pages-static/contact/contact.component';
-import { ShoppingCartComponent } from './transaction-pages/shopping-cart/shopping-cart.component';
-import { LoginComponent } from './user-pages/login/login.component';
-import { SignUpComponent } from './user-pages/sign-up/sign-up.component';
-import { ProductDetailComponent } from './pages-static/product-detail/product-detail.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {HttpIntercepterBasicAuthService} from './services/http/http-intercepter-basic-auth.service';
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     FooterComponent,
-    ProductListComponent,
-    ErrorComponent,
-    ContactComponent,
-    ShoppingCartComponent,
-    LoginComponent,
-    SignUpComponent,
-    ProductDetailComponent
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: HttpIntercepterBasicAuthService, multi: true}
+  ],
+  bootstrap: [AppComponent],
+  exports: [],
+  entryComponents: [
+  ]
 })
 export class AppModule { }

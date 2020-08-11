@@ -1,23 +1,29 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {ProductListComponent} from './pages-static/product-list/product-list.component';
 import {ErrorComponent} from './error/error.component';
-import {ContactComponent} from './pages-static/contact/contact.component';
-import {SignUpComponent} from './user-pages/sign-up/sign-up.component';
-import {ShoppingCartComponent} from './transaction-pages/shopping-cart/shopping-cart.component';
-import {ProductDetailComponent} from './pages-static/product-detail/product-detail.component';
+import {AuthGuard} from './services/auth/auth.guard';
 
-const routes: Routes = [
-  { path: '', component: ProductListComponent  },
-  { path: 'contact', component: ContactComponent  },
-  { path: 'signup', component: SignUpComponent  },
-  { path: 'productDetail/:productId', component: ProductDetailComponent },
-  { path: 'shoppingcart', component: ShoppingCartComponent  },
+const appRoutes: Routes = [
+  {
+    path: '',
+    loadChildren: () => import('./static-pages/static-pages.module').then(mod => mod.StaticPagesModule)
+  },
+  {
+    path: 'admin',
+    loadChildren: () => import('./admin-pages/admin-pages.module').then(mod => mod.AdminPagesModule),
+    canLoad: [AuthGuard]
+  },
+  {
+    path: 'user',
+    loadChildren: () => import('./user-pages/user-pages.module').then(mod => mod.UserPagesModule),
+    canLoad: [AuthGuard]
+
+  },
   { path: '**', component: ErrorComponent}
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(appRoutes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

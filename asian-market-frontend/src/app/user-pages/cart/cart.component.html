@@ -1,0 +1,73 @@
+<div class="container">
+  <div class="card shopping-cart">
+    <div class="card-body">
+      <div class="row justify-content-center"  *ngIf="cartProductItemList.length === 0">
+        <h4>Your shopping cart is empty!</h4>
+      </div>
+      <!-- PRODUCT -->
+      <div class="row" *ngFor="let cardProd of cartProductItemList; let i = index">
+        <div class="col-md-2">
+          <a routerLink="/product/{{cardProd.cartProduct.product.productId}}">
+            <img class="img-responsive" [src]="cardProd.imageURL" alt="{{cardProd.cartProduct.product.name}}"  height="80">
+          </a>
+        </div>
+        <div class="col-12 col-md-5">
+          <a routerLink="/product/{{cardProd.cartProduct.product.productId}}">
+            <h5 class="product-name"><strong>{{cardProd.cartProduct.product.name}}</strong></h5>
+          </a>
+          <h4>
+            <small>Brand {{cardProd.cartProduct.product.brand}}</small>
+          </h4>
+        </div>
+        <div class="col-4 col-md-2" style="padding-top: 5px">
+          <h6><strong>{{cardProd.cartProduct.product.price | number : '1.2-2'}} </strong></h6>
+        </div>
+        <div class="col-4 col-md-2">
+          <div class="quantity">
+            <input type="button" value="+" class="plus" (click)="changeAmount(1, i)">
+            <fieldset disabled>
+              <input type="number" step="1" max="99" min="0" value="{{cardProd.cartProduct.quantity}}" title="Qty" class="qty"
+                     size="4">
+            </fieldset>
+            <input type="button" value="-" class="minus" (click)="changeAmount(-1, i)">
+          </div>
+        </div>
+        <div class="col-4 col-md-1">
+          <button type="button" class="btn btn-outline-danger btn-xs" (click)="deleteCartProduct(i)">
+            <i class="fa fa-trash" aria-hidden="true"></i>
+          </button>
+        </div>
+<!--        <div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right row">-->
+<!--          -->
+<!--          <div class="col-4 col-sm-4 col-md-2">-->
+<!--            <div class="quantity">-->
+<!--              <input type="button" value="+" class="plus" (click)="changeAmount(1, i)">-->
+<!--              <fieldset disabled>-->
+<!--                <input type="number" step="1" max="99" min="0" value="{{cardProd.cartProduct.quantity}}" title="Qty" class="qty"-->
+<!--                       size="4">-->
+<!--              </fieldset>-->
+<!--              <input type="button" value="-" class="minus" (click)="changeAmount(-1, i)">-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="col-2 col-sm-2 col-md-2 text-right">-->
+<!--            <button type="button" class="btn btn-outline-danger btn-xs" (click)="deleteCartProduct(i)">-->
+<!--              <i class="fa fa-trash" aria-hidden="true"></i>-->
+<!--            </button>-->
+<!--          </div>-->
+<!--        </div>-->
+      </div>
+      <!-- END PRODUCT -->
+    </div>
+    <div class="card-footer">
+      <div class="row justify-content-end" style="margin: 10px">
+        <div class="col-4" style="margin: 5px">
+          Total price: <b>{{totalPrice() | number : '1.2-2'}} DKK</b>
+        </div>
+        <div class="col-4">
+          <a routerLink="/user/checkout" class="btn btn-success pull-right">Checkout</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

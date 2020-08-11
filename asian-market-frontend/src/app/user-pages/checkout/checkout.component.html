@@ -1,0 +1,59 @@
+<div class="container">
+  <h1>Checkout</h1>
+</div>
+
+<div class="container">
+  <h3>Order Summary</h3>
+  <div *ngIf="cartProductList">
+    <table class="table">
+      <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Quantity</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let cartProduct of cartProductList">
+        <th scope="row">{{cartProduct.product.name}}</th>
+        <td>{{cartProduct.quantity}}</td>
+      </tr>
+      <tr>
+        <th>Total cost</th>
+        <td>{{totalcost()}} DKK</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<div class="container">
+  <h3>Delivery Address</h3>
+  <div class="radio" *ngIf="addressList">
+    <div *ngFor="let address of addressList; let i = index">
+      <label>
+        <p><input type="radio" name="optradio" (click)="chooseAddress(i)"> {{address.fullName}}</p>
+        <p *ngIf="address.addressLine2">{{address.addressLine1}}, {{address.addressLine2}},
+          {{address.city}}, {{address.postcode}}, {{address.country}}</p>
+        <p *ngIf="!address.addressLine2">{{address.addressLine1}},
+          {{address.city}}, {{address.postcode}}, {{address.country}}</p>
+        <p>{{address.phoneNumber}}</p>
+      </label>
+    </div>
+  </div>
+  <div class="radio disabled">
+    <label><input type="radio" name="optradio" (click)="addNewAddress()" disabled>Add new address (pending)</label>
+  </div>
+
+</div>
+
+<div class="container">
+  <h3>Payment method</h3>
+  <div class="radio">
+    <label><input type="radio" name="deliveryRadio" checked>Pay on Delivery</label>
+  </div>
+</div>
+
+<div class="container">
+  <button (click)="addNewOrder()"> Submit Order </button>
+</div>

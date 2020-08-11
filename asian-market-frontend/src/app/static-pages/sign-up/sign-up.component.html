@@ -1,0 +1,168 @@
+<!--<div class="container">-->
+<!--  <div class="row justify-content-center">-->
+<!--    <div class="col-md-8">-->
+<!--      <div class="card">-->
+<!--        <div class="card-header">Register</div>-->
+<!--        <div class="card-body">-->
+<!--          <form #registerForm="ngForm" class="form-horizontal" role="form">-->
+<!--            <div class="form-group">-->
+<!--              <label for="fullname" class="cols-sm-2 control-label">Your Full Name</label>-->
+<!--              <div class="cols-sm-10">-->
+<!--                <div class="input-group">-->
+<!--                  <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>-->
+<!--                  <input type="text" class="form-control" name="fullname" id="fullname" placeholder="Enter your name" required-->
+<!--                         [class.is-invalid]="fullname.invalid && fullname.touched"-->
+<!--                         [(ngModel)]="user.fullName" #fullname="ngModel"/>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--              <label for="email" class="cols-sm-2 control-label">Your Email</label>-->
+<!--              <div class="cols-sm-10">-->
+<!--                <div class="input-group">-->
+<!--                  <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>-->
+<!--                  <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control" name="email" id="email" placeholder="Enter your Email" required-->
+<!--                         #email="ngModel" [class.is-invalid]="email.errors && email.invalid && email.touched"-->
+<!--                         [(ngModel)]="user.email"/>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--              <label for="password" class="cols-sm-2 control-label">Password</label>-->
+<!--              <div class="cols-sm-10">-->
+<!--                <div class="input-group">-->
+<!--                  <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>-->
+<!--                  <input type="password" class="form-control" name="password" id="password" minlength="6"-->
+<!--                         placeholder="Enter your Password" required maxlength=40 autocomplete="off"-->
+<!--                         #password="ngModel" [class.is-invalid]="password.invalid && password.touched"-->
+<!--                         [(ngModel)]="user.password" />-->
+<!--                </div>-->
+<!--                <div *ngIf="password.invalid &&  password.touched">-->
+<!--                  <small class="text-danger" *ngIf="password.errors.minlength"> Password should contain 6 to 40 characters.</small>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--              <label for="confirm" class="cols-sm-2 control-label">Confirm Password</label>-->
+<!--              <div class="cols-sm-10">-->
+<!--                <div class="input-group">-->
+<!--                  <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>-->
+<!--                  <input type="password" class="form-control" name="confirm" id="confirm" placeholder="Confirm your Password"-->
+<!--                         required autocomplete="off" pattern="{{ password.value }}"-->
+<!--                         #confirmpassword="ngModel" [class.is-invalid]="confirmpassword.invalid &&  confirmpassword.touched"-->
+<!--                         [(ngModel)]="confirmpsd" />-->
+<!--                </div>-->
+<!--                <div *ngIf="confirmpassword.invalid &&  confirmpassword.touched">-->
+<!--                  <small class="text-danger" *ngIf="confirmpassword.errors.required"> Please confirm your password. </small>-->
+<!--                  <small class="text-danger" *ngIf="confirmpassword.errors.pattern"> Password & Confirm Password does not match.</small>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--              <label for="phone" class="cols-sm-2 control-label">Your Phone Number</label>-->
+<!--              <div class="cols-sm-10">-->
+<!--                <div class="input-group">-->
+<!--                  <span class="input-group-addon"><i class="fa fa-phone" aria-hidden="true"></i></span>-->
+<!--                  <input type="text" required class="form-control" name="phone" id="phone" placeholder="Enter your phone number" minlength="8" maxlength="12" pattern="[0-9.]*"-->
+<!--                         #phone="ngModel" [class.is-invalid]="phone.errors && phone.invalid && phone.touched"-->
+<!--                         [(ngModel)]="user.phone"/>-->
+<!--                 </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--              <button type="button" class="btn btn-primary btn-lg btn-block login-button" [disabled]="registerForm.form.invalid" (click)="submit()">Register</button>-->
+<!--            </div>-->
+<!--            <div>-->
+<!--              <small class="text-danger" *ngIf="!isEmailValid">The email has been registered.</small>-->
+<!--            </div>-->
+<!--            <div class="login-register">-->
+<!--              <a routerLink="/login">Login</a>-->
+<!--            </div>-->
+<!--          </form>-->
+<!--        </div>-->
+
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">Register</div>
+        <div class="card-body">
+          <form [formGroup]="userForm" class="form-horizontal" role="form">
+            <div class="form-group">
+              <label for="fullname" class="cols-sm-2 control-label">Your Full Name</label>
+              <div class="cols-sm-10">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                  <input type="text" class="form-control" formControlName="fullName" id="fullname" placeholder="Enter your name"
+                         [class.is-invalid]="fullName.invalid && fullName.touched">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email" class="cols-sm-2 control-label">Your Email</label>
+              <div class="cols-sm-10">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                  <input type="email" class="form-control" formControlName="email" id="email" placeholder="Enter your Email"
+                         [class.is-invalid]="email.errors && email.invalid && email.touched || email.errors?.uniqueEmail" />
+                </div>
+                <small class="text-danger" *ngIf="email.errors?.uniqueEmail">This email has been registered already</small>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="password" class="cols-sm-2 control-label">Password</label>
+              <div class="cols-sm-10">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                  <input type="password" class="form-control" formControlName="password" id="password"
+                         placeholder="Enter your Password" autocomplete="off"
+                         [class.is-invalid]="password.invalid && password.touched"/>
+                </div>
+                <div *ngIf="password.invalid &&  password.touched">
+                  <small class="text-danger" *ngIf="password.errors.minlength"> Password should contain 6 to 40 characters.</small>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="confirmPassword" class="cols-sm-2 control-label">Confirm Password</label>
+              <div class="cols-sm-10">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                  <input type="password" class="form-control" formControlName="confirmPassword" id="confirmPassword" placeholder="Confirm your Password"
+                         required autocomplete="off" pattern="{{ password.value }}"
+                         [class.is-invalid]="userForm.errors?.misMatch && confirmPassword.touched"/>
+                </div>
+                <div *ngIf="confirmPassword.touched">
+                  <small class="text-danger" *ngIf="userForm.errors?.misMatch"> Password & Confirm Password does not match.</small>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="phone" class="cols-sm-2 control-label">Your Phone Number</label>
+              <div class="cols-sm-10">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-phone" aria-hidden="true"></i></span>
+                  <input type="text" class="form-control" formControlName="phone" id="phone" placeholder="Enter your phone number"
+                         [class.is-invalid]="phone.errors && phone.invalid"/>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <button type="button" class="btn btn-primary btn-lg btn-block login-button" [disabled]="userForm.invalid" (click)="submit()">Register</button>
+            </div>
+            <div class="login-register">
+              <a routerLink="/login">Login</a>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

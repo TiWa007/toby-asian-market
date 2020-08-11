@@ -1,0 +1,194 @@
+<div class="container pt-3">
+  <div *ngIf="orderList">
+    <div class="accordion md-accordion" id="accordion" role="tablist" aria-multiselectable="true">
+      <div *ngFor="let order of orderList; let idx = index">
+        <!-- Accordion card -->
+        <div class="card">
+
+          <!-- Card header -->
+          <div class="card-header" role="tab">
+            <h5>Order number: {{order.orderId}}</h5>
+            <div class="row">
+              <div class="col-sm-6">
+                <p>Order Status: {{getOrderStatus(order)}}</p>
+                <p>Order Date: {{order.createDate | date:'medium'}}</p>
+              </div>
+              <div class="col-sm-6">
+                <p>Total Cost: {{order.amount | number : '1.2-2'}} DKK</p>
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1{{idx}}" aria-expanded="true">
+                  Details <i class="fas fa-angle-down rotate-icon"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card body -->
+          <div id="collapse1{{idx}}" class="collapse hide" role="tabpanel" data-parent="#accordion">
+            <div class="card-body">
+              <ul class="list-group">
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p>Product Name</p>
+                    </div>
+                    <div class="col-sm-3">
+                      <p>Quantity</p>
+                    </div>
+                    <div class="col-sm-3">
+                      <p>Price (DKK)</p>
+                    </div>
+                  </div>
+                </li>
+                <div *ngFor="let orderItem of order.orderItemSet">
+                  <li class="list-group-item">
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <p>{{orderItem.product.name}}</p>
+                      </div>
+                      <div class="col-sm-3">
+                        <p>{{orderItem.quantity}}</p>
+                      </div>
+                      <div class="col-sm-3">
+                        <p>{{orderItem.product.price | number : '1.2-2'}}</p>
+                      </div>
+                    </div>
+                  </li>
+                </div>
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p>Total:</p>
+                    </div>
+                    <div class="col-sm-3">
+                      <p>{{getQuantity(order)}}</p>
+                    </div>
+                    <div class="col-sm-3">
+                      <p>{{order.amount | number : '1.2-2'}}</p>
+                    </div>
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="fond-weight-bold">Delivery Address:</p>
+                    </div>
+                    <div class="col-sm-9">
+                      <p>{{order.address.fullName}}</p>
+                      <p>{{order.address.phoneNumber}}</p>
+                      <p>{{order.address.addressLine1}}</p>
+                      <p *ngIf="order.address.addressLine2">{{order.address.addressLine2}}</p>
+                      <p>{{order.address.postcode}}</p>
+                      <p>{{order.address.city}}</p>
+                      <p>{{order.address.country}}</p>
+                    </div>
+                  </div>
+                </li>
+                <li class="list-group-item fond-weight-bold">Note: {{order.userNote}}</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!--<div class="container pt-3">-->
+<!--  <div *ngIf="orderList">-->
+<!--    <div *ngFor="let order of orderList; let idx = index">-->
+
+<!--      <div class="panel-group">-->
+<!--        <div class="panel panel-default">-->
+<!--          <div class="panel-heading">-->
+<!--            <ul class="list-group">-->
+<!--              <li class="list-group-item">-->
+<!--                <h5>Order number: {{order.orderId}}</h5>-->
+<!--              </li>-->
+<!--              <li class="list-group-item">-->
+<!--                <div class="row">-->
+<!--                  <div class="col-sm-6">-->
+<!--                    <p>Order Status: {{getOrderStatus(order)}}</p>-->
+<!--                  </div>-->
+<!--                  <div class="col-sm-6">-->
+<!--                    <p>Total Cost: {{order.amount}} DKK</p>-->
+<!--                  </div>-->
+<!--                  <div class="col-sm-6">-->
+<!--                    <p>Order Date: {{order.createDate | date:'medium'}}</p>-->
+<!--                  </div>-->
+<!--                  <div class="col-sm-6">-->
+<!--                    <p><a href="#collapse1{{idx}}" data-toggle="collapse">Details</a></p>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </li>-->
+<!--            </ul>-->
+<!--          </div>-->
+<!--          <div id="collapse{{idx}}" class="panel-collapse collapse">-->
+<!--            <ul class="list-group">-->
+<!--              <li class="list-group-item">-->
+<!--                <div class="row">-->
+<!--                  <div class="col-sm-3">-->
+<!--                    <p>Product Name</p>-->
+<!--                  </div>-->
+<!--                  <div class="col-sm-3">-->
+<!--                    <p>Quantity</p>-->
+<!--                  </div>-->
+<!--                  <div class="col-sm-3">-->
+<!--                    <p>Price (DKK)</p>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </li>-->
+<!--              <div *ngFor="let orderItem of order.orderItemSet">-->
+<!--                <li class="list-group-item">-->
+<!--                  <div class="row">-->
+<!--                    <div class="col-sm-3">-->
+<!--                      <p>{{orderItem.product.name}}</p>-->
+<!--                    </div>-->
+<!--                    <div class="col-sm-3">-->
+<!--                      <p>{{orderItem.quantity}}</p>-->
+<!--                    </div>-->
+<!--                    <div class="col-sm-3">-->
+<!--                      <p>{{orderItem.product.price}} DKK</p>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </li>-->
+<!--              </div>-->
+<!--              <li class="list-group-item">-->
+<!--                <div class="row">-->
+<!--                  <div class="col-sm-3">-->
+<!--                    <p>Total</p>-->
+<!--                  </div>-->
+<!--                  <div class="col-sm-3">-->
+<!--                    <p>{{getQuantity(order)}}</p>-->
+<!--                  </div>-->
+<!--                  <div class="col-sm-3">-->
+<!--                    <p>{{order.amount}}</p>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </li>-->
+<!--              <li class="list-group-item">-->
+<!--                <div class="row">-->
+<!--                  <div class="col-sm-3">-->
+<!--                    <p>Delivery Address</p>-->
+<!--                  </div>-->
+<!--                  <div class="col-sm-9">-->
+<!--                    <p>{{order.address.fullName}}</p>-->
+<!--                    <p>{{order.address.phoneNumber}}</p>-->
+<!--                    <p>{{order.address.addressLine1}}</p>-->
+<!--                    <p *ngIf="order.address.addressLine2">{{order.address.addressLine2}}</p>-->
+<!--                    <p>{{order.address.postcode}}</p>-->
+<!--                    <p>{{order.address.city}}</p>-->
+<!--                    <p>{{order.address.country}}</p>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </li>-->
+<!--              <li class="list-group-item">Note: {{order.userNote}}</li>-->
+<!--            </ul>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->

@@ -1,0 +1,141 @@
+<div class="container-fluid bg-light">
+  <div class="row">
+    <div class="col-12 col-md-8">
+      <div class="btn-group">
+        <button type="button" class="btn btn-light" (click)="getProductsByCategory('allProduct')">All Products</button>
+        <button type="button" class="btn btn-light" (click)="getProductsByCategory('Rice & Noodle')">Rice & Noodle</button>
+        <button type="button" class="btn btn-light" (click)="getProductsByCategory('Instant Food')">Instant Food</button>
+        <button type="button" class="btn btn-light" (click)="getProductsByCategory('Snack')">Snack</button>
+        <button type="button" class="btn btn-light" (click)="getProductsByCategory('Sauce')">Sauce</button>
+        <button type="button" class="btn btn-light" (click)="getProductsByCategory('Sale')">On Sale</button>
+      </div>
+    </div>
+    <div class="col-12 col-md-3 ml-md-auto">
+      <form class="form-inline">
+        <input class="form-control" type="text" placeholder="Search" name="searchKey" [(ngModel)]="searchKey">
+        <button class="btn btn-outline-success" type="button" (click)="getProductsByCategory('Search')">Search</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<br>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">
+
+      <div>
+        Brand
+      </div>
+      <form id="brandbox">
+        <div *ngFor="let b of brandList">
+          <input class="m-2" type="checkbox" (click)="setBrand(b)"> {{b}} <br>
+        </div>
+      </form>
+
+      <br>
+      <div>
+        Price
+      </div>
+      <form>
+        <div class="row">
+          <div class="col-5">
+            <input #newMinPrice type="text" (keyup.enter)="setPriceRange(newMinPrice.value, newMaxPrice.value)" class="form-control" placeholder="{{minValue}}">
+          </div>
+          <div>
+            <span>--</span>
+          </div>
+          <div class="col-5">
+            <input #newMaxPrice type="text" (keyup.enter)="setPriceRange(newMinPrice.value, newMaxPrice.value)" class="form-control" placeholder="{{maxValue}}">
+          </div>
+        </div>
+        <div>
+          <button class="btn btn-outline-success btn-sm" (click)="setPriceRange(newMinPrice.value, newMaxPrice.value)">Search</button>
+        </div>
+      </form>
+    </div>
+
+
+
+    <div class="col-md-10">
+      <div class="row">
+        <div class="col-3">
+          <div ngbDropdown class="d-inline-block">
+            <div class="dropdown, d-inline-block">
+              <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown">
+                SORT BY
+              </button>
+              <div class="dropdown-menu">
+                <button class="dropdown-item" (click)="setSort('popularity')">Popularity</button>
+                <button class="dropdown-item" (click)="setSort('priceAsc')">Price: Low to high</button>
+                <button class="dropdown-item" (click)="setSort('priceDesc')">Price: High to low</button>
+                <button class="dropdown-item" (click)="setSort('name')">A-Z</button>
+                <button class="dropdown-item" (click)="setSort('sale')">On Sale</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-8">
+          <div class="row justify-content-end">
+            <nav aria-label="Page navigation example">
+              <ul class="pagination">
+                <li class="page-item" [ngClass]="{'disabled': pageNo === 0}">
+                  <a class="page-link" (click)="setPage(pageNo-1)" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+                <li class="page-item" [ngClass]="{'active': page === pageNo}" *ngFor="let page of pagination">
+                  <a class="page-link" (click)="setPage(page)">{{page+1}}</a>
+                </li>
+                <li class="page-item" [ngClass]="{'disabled': pageNo === totalPages-1}">
+<!--                <li class="page-item">-->
+                  <a class="page-link" (click)="setPage(pageNo+1)" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3 col-sm-6 mt-4" *ngFor="let prod of productList" >
+          <div class="card align-content-center align-items-center" style="height: 20rem; width: 14rem">
+            <div class="text-center" style="height: 12rem; width:12rem; padding-top: 0.5rem">
+              <a routerLink="../product/{{prod.product.productId}}">
+                <img class="img-fluid h-100" [src]="prod.imageURL"  alt="{{prod.product.name}}">
+              </a>
+            </div>
+
+            <div class="card-body">
+              <div style="height: 3rem">
+                <a routerLink="../product/{{prod.product.productId}}">
+                  <p class="text-center">{{prod.product.name}}</p>
+                </a>
+              </div>
+
+              <div class="row align-items-center">
+                <div class="col-8">
+                  <div  *ngIf="prod.product.isSale === 1">
+                    <p class="card-text text-center">{{prod.product.price*prod.product.salePercentage/100}} DKK
+                      <span class="badge badge-danger">Sale {{100-prod.product.salePercentage}}%Off</span></p>
+                  </div>
+                  <div  *ngIf="prod.product.isSale === 0">
+                    <p class="card-text text-center">{{prod.product.price | number : '1.2-2'}} DKK</p>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <a (click)="addToCart(prod.product)"><i class="fa fa-shopping-cart" placement="top" ngbTooltip="Add to Cart"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

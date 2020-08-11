@@ -1,0 +1,126 @@
+<div class="container mt-3">
+
+  <div *ngIf="!isEdit">
+    <div class="pb-3 pt-3">
+      <button type="button" class="btn btn-warning" (click)="addAddress()">
+        Add address
+      </button>
+    </div>
+
+    <div *ngIf="addressList">
+      <div *ngFor="let address of addressList; let i = index">
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">{{address.fullName}}</h5>
+            <p *ngIf="address.addressLine2">{{address.addressLine1}}, {{address.addressLine2}},
+              {{address.city}}, {{address.postcode}}, {{address.country}}</p>
+            <p *ngIf="!address.addressLine2">{{address.addressLine1}},
+              {{address.city}}, {{address.postcode}}, {{address.country}}</p>
+            <p>{{address.phoneNumber}}</p>
+            <button type="button" class="btn btn-secondary" (click)="editAddress(i)">
+              Edit
+            </button>
+            <button type="button" class="btn btn-danger offset-1" (click)="delete(i)">
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div *ngIf="isEdit">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="card">
+            <div class="card-header" *ngIf="isAdd"><h3>Add new address</h3></div>
+            <div class="card-header" *ngIf="!isAdd"><h3>Edit address</h3></div>
+            <div class="card-body">
+              <form [formGroup]="addressForm" class="form-horizontal" role="form">
+                <div class="form-group">
+                  <label for="fullname" class="cols-sm-2 control-label">Full Name*</label>
+                  <div class="cols-sm-10">
+                    <div class="input-group">
+                      <input type="text" class="form-control" formControlName="fullName" id="fullname" placeholder="Enter your name"
+                             [class.is-invalid]="fullName.invalid && fullName.touched">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="addressLine1" class="cols-sm-2 control-label">Address Line 1*</label>
+                  <div class="cols-sm-10">
+                    <div class="input-group">
+                      <input type="text" class="form-control" formControlName="addressLine1" id="addressLine1"
+                             [class.is-invalid]="addressLine1.invalid && addressLine1.touched">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="addressLine2" class="cols-sm-2 control-label">Address Line 2</label>
+                  <div class="cols-sm-10">
+                    <div class="input-group">
+                      <input type="text" class="form-control" formControlName="addressLine2" id="addressLine2"
+                             [class.is-invalid]="addressLine2.invalid && addressLine2.touched">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="city" class="cols-sm-2 control-label">City*</label>
+                  <div class="cols-sm-10">
+                    <div class="input-group">
+                      <input type="text" class="form-control" formControlName="city" id="city"
+                             [class.is-invalid]="city.invalid && city.touched">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="phoneNumber" class="cols-sm-2 control-label">Postcode</label>
+                  <div class="cols-sm-10">
+                    <div class="input-group">
+                      <input type="text" class="form-control" formControlName="postcode" id="postcode" placeholder="Enter your postcode"
+                             [class.is-invalid]="(postcode.errors || postcode.invalid) && postcode.touched"/>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="country" class="cols-sm-2 control-label">Country*</label>
+                  <div class="cols-sm-10">
+                    <div class="input-group">
+                      <input type="text" class="form-control" formControlName="country" id="country"
+                             [class.is-invalid]="country.invalid && country.touched">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="phoneNumber" class="cols-sm-2 control-label">Phone Number*</label>
+                  <div class="cols-sm-10">
+                    <div class="input-group">
+                      <input type="text" class="form-control" formControlName="phoneNumber" id="phoneNumber" placeholder="Enter your phone number"
+                             [class.is-invalid]="(phoneNumber.errors || phoneNumber.invalid) && phoneNumber.touched"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <button type="button" class="btn btn-secondary mr-3" [disabled]="addressForm.untouched || addressForm.invalid" (click)="submit()">Save</button>
+                  <button type="button" class="btn btn-warning mx-3" (click)="cancel()">Cancel</button>
+                </div>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+

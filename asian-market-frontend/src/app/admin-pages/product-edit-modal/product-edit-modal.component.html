@@ -1,0 +1,94 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 class="modal-title">Product Details</h3>
+      <button type="button" class="close" (click)="activeModal.dismiss('Cross click')" aria-hidden="true">&times;</button>
+    </div>
+    <div class="modal-body">
+      <form #editForm="ngForm" class="form-horizontal" role="form">
+        <div class="form-group">
+          <label for="productName" class="col-sm-9 control-label">Product Name*</label>
+          <div class="col-sm-9">
+            <input type="text" name="productName" id="productName" class="form-control" required
+                   [class.is-invalid]="productName.invalid && productName.touched"
+                   [(ngModel)]="productItem.product.name" #productName="ngModel">
+            <small class="text-danger" [hidden]="productName.valid || productName.untouched" >Name is required</small>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="category" class="col-sm-9 control-label">Category*</label>
+          <div class="col-sm-9">
+            <select name="category" id="category" class="form-control" required
+                    [class.is-invalid]="category.invalid && category.touched"
+                    [(ngModel)]="productItem.product.category" #category="ngModel">
+              <option *ngFor="let cate of categories" [value]="cate" [selected]="cate === productItem.product.category">{{ cate }}</option>
+            </select>
+          </div>
+          <small class="text-danger" [hidden]="category.valid || category.untouched">Please choose a category</small>
+        </div>
+        <div class="form-group">
+          <label for="productBrand" class="col-sm-3 control-label">Brand*</label>
+          <div class="col-sm-9">
+            <input type="text" id="productBrand" name="productBrand" class="form-control" required
+                   [class.is-invalid]="productBrand.invalid && productBrand.touched"
+                   [(ngModel)]="productItem.product.brand" #productBrand="ngModel">
+            <small class="text-danger" [hidden]="productBrand.valid || productBrand.untouched" >Brand is required</small>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="price" class="col-sm-9 control-label">Price* (DKK)</label>
+          <div class="col-sm-9">
+            <input type="number" id="price" name="productPrice" class="form-control" required
+                   [class.is-invalid]="productPrice.invalid && productPrice.touched"
+                   [(ngModel)]="productItem.product.price" #productPrice="ngModel">
+            <small class="text-danger" [hidden]="productPrice.valid || productPrice.untouched" >Price is required</small>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="quantity" class="col-sm-9 control-label">Quantity*</label>
+          <div class="col-sm-9">
+            <input type="number" id="quantity" name="productQuantity" class="form-control" required
+                   [class.is-invalid]="productQuantity.invalid && productQuantity.touched"
+                   [(ngModel)]="productItem.product.quantity" #productQuantity="ngModel">
+            <small class="text-danger" [hidden]="productQuantity.valid || productQuantity.untouched" >Quantity is required</small>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="sale" class="col-sm-9 control-label">Sale</label>
+          <div class="col-sm-9">
+            <input type="checkbox" id="sale" name="productIsSale" [(ngModel)]="productItem.product.isSale" class="form-control">
+          </div>
+        </div>
+        <div class="form-group" *ngIf="productItem.product.isSale">
+          <label for="salePec" class="col-sm-9 control-label">Sale Percentage</label>
+          <div class="col-sm-9">
+            <input type="number" id="salePec" name="productSalePec" [(ngModel)]="productItem.product.salePercentage" class="form-control">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="description" class="col-sm-9 control-label">Description</label>
+          <div class="col-sm-9">
+            <input type="text" id="description" name="productDescription" [(ngModel)]="productItem.product.description" class="form-control">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="file" class="col-sm-9 control-label">Upload Image*</label>
+          <div class="col-sm-9">
+            <input type="file" id="file" name="imageFile" accept=".jpg, .jpeg, .png" (change)="selectedImage($event)" (click)="isVisited($event)" class="form-control" requried>
+            <small class="text-danger" [hidden]="isValidImage || !isVisit" >Image is required</small>
+          </div>
+          <div *ngIf="productItem.imageURL">
+            <img [src]="productItem.imageURL" alt="{{productItem.product.name}}"  height="50"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-9">
+            <small class="help-block">*Required fields</small>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-secondary mx-3" [disabled]="editForm.form.invalid || editForm.form.pristine || !isValidImage" (click)="update()">Save</button>
+        <button class="btn btn-warning mx-3" (click)="activeModal.dismiss('Cancel')">Cancel</button>
+      </form>
+    </div>
+  </div>
+</div>

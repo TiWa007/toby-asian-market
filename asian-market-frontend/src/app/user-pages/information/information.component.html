@@ -1,0 +1,71 @@
+<div *ngIf="user">
+  <div class="container mt-3">
+    <form #userForm ="ngForm" (ngSubmit)="onSubmit(userForm)" class="form-horizontal" role="form">
+      <div *ngIf="!isChangingPassword" class="form-group">
+        <label for="fullname" class="col-sm-6 control-label">Full Name</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" name="fullname" id="fullname" placeholder="Enter your Name"
+                 required [class.is-invalid]="fullname.invalid && fullname.touched" [disabled]="!isEditable"
+                 [ngModel]="user.fullName" #fullname="ngModel"/>
+        </div>
+      </div>
+      <div *ngIf="!isChangingPassword" class="form-group">
+        <label for="email" class="col-sm-6 control-label">Email</label>
+        <div class="col-sm-9">
+          <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control" name="email" id="email" placeholder="Enter your Email"
+                 required #email="ngModel" [class.is-invalid]="email.errors && email.invalid && email.touched" [disabled]="true"
+                 [ngModel]="user.email"/>
+        </div>
+      </div>
+      <div *ngIf="!isChangingPassword" class="form-group">
+        <label for="phone" class="col-sm-6 control-label">Phone number </label>
+        <div class="col-sm-9">
+          <input type="tel" class="form-control" name="phone" id="phone" minlength="8" maxlength="12" pattern="[0-9.]*"
+                 #phone="ngModel" [class.is-invalid]="phone.errors && phone.invalid && phone.touched" [disabled]="!isEditable"
+                 [ngModel]="user.phone"/>
+        </div>
+      </div>
+
+      <div *ngIf="isChangingPassword" class="form-group">
+        <label for="prePassword" class="col-sm-6 control-label">Password</label>
+        <div class="col-sm-9">
+          <input type="password" class="form-control" name="prePassword" id="prePassword"
+                 placeholder="Enter your Previous Password" required maxlength=40 autocomplete="off"
+                 [class.is-invalid]="prePassword.invalid && prePassword.touched" #prePassword="ngModel" ngModel
+                 pattern="{{user.password}}" />
+        </div>
+      </div>
+
+      <div *ngIf="isChangingPassword" class="form-group">
+        <label for="newPassword" class="col-sm-6 control-label">New Password</label>
+        <div class="col-sm-9">
+          <input type="password" class="form-control" name="newPassword" id="newPassword" minlength="6" maxlength=40 autocomplete="off"
+                 placeholder="Enter your Password" required
+                 #newPassword="ngModel" [class.is-invalid]="newPassword.invalid && newPassword.touched"
+                 [(ngModel)]="newPsd"/>
+        </div>
+      </div>
+
+      <div *ngIf="isChangingPassword" class="form-group">
+        <label for="confirm" class="col-sm-6 control-label">Confirm New Password</label>
+        <div class="col-sm-9">
+          <input type="password" class="form-control" name="confirm" id="confirm" placeholder="Confirm your Password"
+                 required autocomplete="off" pattern="{{newPsd}}"
+                 #confirmpsd="ngModel" [class.is-invalid]="confirmpsd.invalid &&  confirmpsd.touched"
+                 ngModel />
+        </div>
+      </div>
+
+      <div *ngIf="!isEditable" >
+        <button class="btn btn-secondary mx-3" (click)="edit()">Edit</button>
+        <button class="btn btn-warning mx-3" (click)="changePassword()">Change Password</button>
+      </div>
+      <div *ngIf="isEditable" >
+        <button type="submit" class="btn btn-secondary mx-3" [disabled]="userForm.form.invalid || userForm.form.pristine">Save</button>
+        <button class="btn btn-warning mx-3" (click)="cancel()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+

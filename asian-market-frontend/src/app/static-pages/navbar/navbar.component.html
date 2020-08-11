@@ -1,0 +1,95 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" routerLink="">Toby's Asian Market</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/contact">Contact</a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/shoppingcart">Shopping Cart <i class="fas fa-shopping-cart"></i></a>
+      </li>
+
+<!--       Not a user-->
+      <li class="nav-item" *ngIf="!authService.isUser()">
+        <a class="nav-link" routerLink="/login">Login</a>
+      </li>
+      <li class="nav-item" *ngIf="!authService.isUser()">
+        <a class="nav-link" routerLink="/signup">Sign up</a>
+      </li>
+
+<!--  Is a admin or user -->
+
+
+<!--is User-->
+      <li class="nav-item dropdown" *ngIf="authService.isUser() && !authService.isAdmin()">
+        <a class="nav-link dropdown-toggle" routerLink="/user" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          My acount
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" routerLink="/user">My acount</a>
+          <div class="dropdown-divider"></div>
+          <button class="btn" (click)="logout()">Logout</button>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown" *ngIf="authService.isAdmin()">
+        <a class="nav-link dropdown-toggle" routerLink="/admin" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Admin Page
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" routerLink="/admin">Admin Page</a>
+          <a class="dropdown-item" routerLink="/user">User Page</a>
+          <div class="dropdown-divider"></div>
+          <button class="btn ml-2" (click)="logout()">Logout</button>
+        </div>
+      </li>
+
+    </ul>
+  </div>
+</nav>
+
+
+<div id="myModal" class="modal fade">
+  <div class="modal-dialog modal-login">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Sign In</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form >
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="fas fa-user"></i></span>
+              <input type="text" class="form-control" name="username" placeholder="Username" required="required">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+              <input type="text" class="form-control" name="password" placeholder="Password" required="required">
+            </div>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block btn-lg">Sign In</button>
+          </div>
+          <p class="hint-text"><a href="#">Forgot Password?</a></p>
+        </form>
+      </div>
+      <div class="modal-footer">Don't have an account? <a href="#">Create one</a></div>
+    </div>
+  </div>
+</div>
+
+<!--<router-outlet></router-outlet>-->
+
